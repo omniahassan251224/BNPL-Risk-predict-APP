@@ -487,12 +487,6 @@ with st.form("bnpl_risk_form"):
             label_visibility="collapsed"
         )
 
-        st.markdown('<div class="form-label">CUSTOMER SEGMENT</div>', unsafe_allow_html=True)
-        customer_segment = st.selectbox(
-            "customer_segment",
-            ["New", "Regular", "Premium", "High Value"],
-            label_visibility="collapsed"
-        )
 
     # ---------------------------------------------------------------------------
     # PREDICT BUTTON (form submit)
@@ -547,7 +541,6 @@ if predict_clicked:
         "employment_type": employment_type,
         "product_category": product_category,
         "location": location,
-        "customer_segment": customer_segment
     }])
 
     try:
