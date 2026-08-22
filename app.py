@@ -9,8 +9,7 @@ model = joblib.load("bnpl_model.pkl")
 st.set_page_config(page_title="BNPL Risk", page_icon="🛡️", layout="wide")
 
 
-# ---------------------------------------------------------------------------
-# GLOBAL STYLE
+
 # ---------------------------------------------------------------------------
 st.markdown("""
 <style>
@@ -267,23 +266,23 @@ with col_r:
         <div style="display:flex; gap:12px; margin-top:18px;">
             <div class="mini-stat" style="flex:1;"><div class="lab">CUSTOMERS</div><div class="val">11,200</div></div>
             <div class="mini-stat" style="flex:1;"><div class="lab">DEFAULT RATE</div><div class="val">12.4%</div></div>
-            <div class="mini-stat" style="flex:1;"><div class="lab">HIGH RISK</div><div class="val">847</div></div>
+            <div class="mini-stat" style="flex:1;"><div class="lab">HIGH RISK</div><div class="val">576</div></div>
         </div>
         <div style="margin-top:20px; color:#7c8797; font-size:11px; letter-spacing:1px; font-family:'JetBrains Mono',monospace;">RISK DISTRIBUTION</div>
         <div class="bar-row">
             <div class="bar-name">Low Risk</div>
-            <div class="bar-track"><div class="bar-fill" style="width:45%; background:#22c55e;"></div></div>
-            <div class="bar-pct">45%</div>
+            <div class="bar-track"><div class="bar-fill" style="width:73.17%; background:#22c55e;"></div></div>
+            <div class="bar-pct">73.17%</div>
         </div>
         <div class="bar-row">
             <div class="bar-name">Medium Risk</div>
-            <div class="bar-track"><div class="bar-fill" style="width:35%; background:#f59e0b;"></div></div>
-            <div class="bar-pct">35%</div>
+            <div class="bar-track"><div class="bar-fill" style="width21.27%; background:#f59e0b;"></div></div>
+            <div class="bar-pct">21.27%</div>
         </div>
         <div class="bar-row">
             <div class="bar-name">High Risk</div>
-            <div class="bar-track"><div class="bar-fill" style="width:20%; background:#ef4444;"></div></div>
-            <div class="bar-pct">20%</div>
+            <div class="bar-track"><div class="bar-fill" style="width:5.57%; background:#ef4444;"></div></div>
+            <div class="bar-pct">5.57%</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -303,15 +302,12 @@ with col_r:
     st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
 
 st.markdown("<br>", unsafe_allow_html=True)
-
-# ---------------------------------------------------------------------------
-# STAT ROW
-# ---------------------------------------------------------------------------
+-------------------------------------------------------------------------
 s1, s2, s3 = st.columns(3)
 with s1:
-    st.markdown('<div class="stat-big">94.2%</div><div class="stat-lab">Model Accuracy</div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-big">74%</div><div class="stat-lab">Model Accuracy</div>', unsafe_allow_html=True)
 with s2:
-    st.markdown('<div class="stat-big">11,200+</div><div class="stat-lab">Customers Assessed</div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-big">820+</div><div class="stat-lab">Customers Assessed</div>', unsafe_allow_html=True)
 with s3:
     st.markdown('<div class="stat-big">&lt;2s</div><div class="stat-lab">Avg Prediction Time</div>', unsafe_allow_html=True)
 
@@ -322,10 +318,10 @@ st.markdown("<br><hr><br>", unsafe_allow_html=True)
 # ---------------------------------------------------------------------------
 m1, m2, m3, m4 = st.columns(4)
 tiles = [
-    ("👥", "rgba(59,130,246,0.15)", "TOTAL CUSTOMERS", "11,200", "+480 this month"),
-    ("⚠️", "rgba(239,68,68,0.15)", "DEFAULT RATE", "12.4%", "↓ 2.1% vs last month"),
-    ("📈", "rgba(34,197,94,0.15)", "AVERAGE INCOME", "$5,340", "Per month"),
-    ("💳", "rgba(245,158,11,0.15)", "AVG CREDIT SCORE", "682", "Fair — improving"),
+    ("👥", "rgba(59,130,246,0.15)", "TOTAL CUSTOMERS", "10.345", "+480 this month"),
+    ("⚠️", "rgba(239,68,68,0.15)", "DEFAULT RATE", "39.05%", "↓ 2.1% vs last month"),
+    ("📈", "rgba(34,197,94,0.15)", "AVERAGE INCOME", "35.05K", "Per month"),
+    ("💳", "rgba(245,158,11,0.15)", "AVG CREDIT SCORE", "448", "Fair — improving"),
 ]
 for col, (icon, bg, lab, val, sub) in zip([m1, m2, m3, m4], tiles):
     with col:
