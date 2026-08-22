@@ -264,8 +264,8 @@ with col_r:
             <div class="live-badge">● Live</div>
         </div>
         <div style="display:flex; gap:12px; margin-top:18px;">
-            <div class="mini-stat" style="flex:1;"><div class="lab">CUSTOMERS</div><div class="val">11,200</div></div>
-            <div class="mini-stat" style="flex:1;"><div class="lab">DEFAULT RATE</div><div class="val">12.4%</div></div>
+            <div class="mini-stat" style="flex:1;"><div class="lab">CUSTOMERS</div><div class="val">10.375</div></div>
+            <div class="mini-stat" style="flex:1;"><div class="lab">DEFAULT RATE</div><div class="val">39.05%</div></div>
             <div class="mini-stat" style="flex:1;"><div class="lab">HIGH RISK</div><div class="val">576</div></div>
         </div>
         <div style="margin-top:20px; color:#7c8797; font-size:11px; letter-spacing:1px; font-family:'JetBrains Mono',monospace;">RISK DISTRIBUTION</div>
