@@ -302,7 +302,7 @@ with col_r:
     st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
 
 st.markdown("<br>", unsafe_allow_html=True)
--------------------------------------------------------------------------
+
 s1, s2, s3 = st.columns(3)
 with s1:
     st.markdown('<div class="stat-big">74%</div><div class="stat-lab">Model Accuracy</div>', unsafe_allow_html=True)
