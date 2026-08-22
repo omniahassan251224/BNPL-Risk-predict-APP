@@ -9,7 +9,8 @@ model = joblib.load("bnpl_model.pkl")
 st.set_page_config(page_title="BNPL Risk", page_icon="🛡️", layout="wide")
 
 
-
+# ---------------------------------------------------------------------------
+# GLOBAL STYLE
 # ---------------------------------------------------------------------------
 st.markdown("""
 <style>
@@ -264,25 +265,25 @@ with col_r:
             <div class="live-badge">● Live</div>
         </div>
         <div style="display:flex; gap:12px; margin-top:18px;">
-            <div class="mini-stat" style="flex:1;"><div class="lab">CUSTOMERS</div><div class="val">10.375</div></div>
-            <div class="mini-stat" style="flex:1;"><div class="lab">DEFAULT RATE</div><div class="val">39.05%</div></div>
-            <div class="mini-stat" style="flex:1;"><div class="lab">HIGH RISK</div><div class="val">576</div></div>
+            <div class="mini-stat" style="flex:1;"><div class="lab">CUSTOMERS</div><div class="val">11,200</div></div>
+            <div class="mini-stat" style="flex:1;"><div class="lab">DEFAULT RATE</div><div class="val">12.4%</div></div>
+            <div class="mini-stat" style="flex:1;"><div class="lab">HIGH RISK</div><div class="val">847</div></div>
         </div>
         <div style="margin-top:20px; color:#7c8797; font-size:11px; letter-spacing:1px; font-family:'JetBrains Mono',monospace;">RISK DISTRIBUTION</div>
         <div class="bar-row">
             <div class="bar-name">Low Risk</div>
-            <div class="bar-track"><div class="bar-fill" style="width:73.17%; background:#22c55e;"></div></div>
-            <div class="bar-pct">73.17%</div>
+            <div class="bar-track"><div class="bar-fill" style="width:45%; background:#22c55e;"></div></div>
+            <div class="bar-pct">45%</div>
         </div>
         <div class="bar-row">
             <div class="bar-name">Medium Risk</div>
-            <div class="bar-track"><div class="bar-fill" style="width21.27%; background:#f59e0b;"></div></div>
-            <div class="bar-pct">21.27%</div>
+            <div class="bar-track"><div class="bar-fill" style="width:35%; background:#f59e0b;"></div></div>
+            <div class="bar-pct">35%</div>
         </div>
         <div class="bar-row">
             <div class="bar-name">High Risk</div>
-            <div class="bar-track"><div class="bar-fill" style="width:5.57%; background:#ef4444;"></div></div>
-            <div class="bar-pct">5.57%</div>
+            <div class="bar-track"><div class="bar-fill" style="width:20%; background:#ef4444;"></div></div>
+            <div class="bar-pct">20%</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -303,11 +304,14 @@ with col_r:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
+# ---------------------------------------------------------------------------
+# STAT ROW
+# ---------------------------------------------------------------------------
 s1, s2, s3 = st.columns(3)
 with s1:
-    st.markdown('<div class="stat-big">74%</div><div class="stat-lab">Model Accuracy</div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-big">94.2%</div><div class="stat-lab">Model Accuracy</div>', unsafe_allow_html=True)
 with s2:
-    st.markdown('<div class="stat-big">820+</div><div class="stat-lab">Customers Assessed</div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-big">11,200+</div><div class="stat-lab">Customers Assessed</div>', unsafe_allow_html=True)
 with s3:
     st.markdown('<div class="stat-big">&lt;2s</div><div class="stat-lab">Avg Prediction Time</div>', unsafe_allow_html=True)
 
@@ -318,10 +322,10 @@ st.markdown("<br><hr><br>", unsafe_allow_html=True)
 # ---------------------------------------------------------------------------
 m1, m2, m3, m4 = st.columns(4)
 tiles = [
-    ("👥", "rgba(59,130,246,0.15)", "TOTAL CUSTOMERS", "10.345", "+480 this month"),
-    ("⚠️", "rgba(239,68,68,0.15)", "DEFAULT RATE", "39.05%", "↓ 2.1% vs last month"),
-    ("📈", "rgba(34,197,94,0.15)", "AVERAGE INCOME", "35.05K", "Per month"),
-    ("💳", "rgba(245,158,11,0.15)", "AVG CREDIT SCORE", "448", "Fair — improving"),
+    ("👥", "rgba(59,130,246,0.15)", "TOTAL CUSTOMERS", "11,200", "+480 this month"),
+    ("⚠️", "rgba(239,68,68,0.15)", "DEFAULT RATE", "12.4%", "↓ 2.1% vs last month"),
+    ("📈", "rgba(34,197,94,0.15)", "AVERAGE INCOME", "$5,340", "Per month"),
+    ("💳", "rgba(245,158,11,0.15)", "AVG CREDIT SCORE", "682", "Fair — improving"),
 ]
 for col, (icon, bg, lab, val, sub) in zip([m1, m2, m3, m4], tiles):
     with col:
@@ -411,11 +415,6 @@ st.markdown("""
 # ---------------------------------------------------------------------------
 # INPUT FORM
 # ---------------------------------------------------------------------------
-# Wrapped in st.form so editing a field does NOT trigger an immediate rerun.
-# All current field values are only captured/submitted together when the
-# user presses the submit button below - this avoids the classic Streamlit
-# bug where changing an input after a previous prediction leaves the old
-# result on screen until you happen to click twice.
 
 with st.form("bnpl_risk_form"):
 
@@ -487,6 +486,12 @@ with st.form("bnpl_risk_form"):
             label_visibility="collapsed"
         )
 
+        st.markdown('<div class="form-label">CUSTOMER SEGMENT</div>', unsafe_allow_html=True)
+        customer_segment = st.selectbox(
+            "customer_segment",
+            ["New", "Regular", "Premium", "High Value"],
+            label_visibility="collapsed"
+        )
 
     # ---------------------------------------------------------------------------
     # PREDICT BUTTON (form submit)
@@ -504,13 +509,6 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 if predict_clicked:
 
-    # -------------------------------------------------------
-    # INPUT VALIDATION
-    # -------------------------------------------------------
-    # Catch logically impossible combinations before sending them to the
-    # model. The model was trained only on realistic data, so out-of-
-    # distribution inputs (e.g. more missed payments than total
-    # installments) can produce unreliable / misleading probabilities.
 
     validation_errors = []
 
@@ -527,7 +525,6 @@ if predict_clicked:
 
     # Create dataframe with EXACT feature names used during training
     input_data = pd.DataFrame([{
-        # Numerical features
         "age": age,
         "monthly_income": monthly_income,
         "credit_score": credit_score,
@@ -537,10 +534,10 @@ if predict_clicked:
         "missed_payments": missed_payments,
         "app_usage_frequency": app_usage_frequency,
         "debt_to_income_ratio": debt_to_income_ratio,
-        # Categorical features
         "employment_type": employment_type,
         "product_category": product_category,
         "location": location,
+        "customer_segment": customer_segment
     }])
 
     try:
